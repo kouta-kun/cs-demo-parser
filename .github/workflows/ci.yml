@@ -9,7 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build for Linux
-        run: cargo build --target x86_64-unknown-linux-gnu
+        run: cargo build --target x86_64-unknown-linux-gnu --release
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-binary
+          path: target/x86_64-unknown-linux-gnu/release/csgo-parser
   build-windows:
     runs-on: windows-latest
     steps:
@@ -17,4 +22,9 @@ jobs:
       - name: Install Windows target
         run: rustup target add x86_64-pc-windows-gnu
       - name: Build for Windows
-        run: cargo build --target x86_64-pc-windows-gnu
+        run: cargo build --target x86_64-pc-windows-gnu --release
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-binary
+          path: target/x86_64-pc-windows-gnu/release/*.exe
